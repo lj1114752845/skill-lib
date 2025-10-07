@@ -3,8 +3,7 @@
 * 邮箱：lj2690@163.com
 * */
 class Http {
-    //static HOST = import.meta.env.DEV ? 'localhost' : '8.137.122.38';
-    static HOST = '8.137.122.38';
+    static HOST = import.meta.env.DEV ? 'localhost':'8.137.122.38';
     static PORT = 80;
     static WS_PORT = 80;
     static BASE_URL = `http://${Http.HOST}:${Http.PORT}`;

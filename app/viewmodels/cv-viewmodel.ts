@@ -3,6 +3,7 @@
 * 邮箱：lj2690@163.com
 * */
 import {type ApplicantModel} from "~/models/resume/applicant-model";
+import {CvRepository} from "~/repositorys/cv-repository";
 
 class CvData {
     applicantData?: ApplicantModel
@@ -17,19 +18,21 @@ class CvData {
 
 class CvViewModel {
     private data: CvData;
+    private repository: CvRepository
 
     constructor(data: CvData) {
         this.data = data;
+        this.repository = new CvRepository();
     }
 
 
     async getResumer() {
         this.data.err = '';
-        const data = await fetch('/ljq.json');
-        if (data.ok) {
-            this.data.applicantData = await data.json();
+        const res = await this.repository.getCv();
+        if (res.code === 1) {
+            this.data.applicantData = res.data as ApplicantModel;
         } else {
-            this.data.err = '找不到文件';
+            this.data.err = res.message;
         }
     }
 }

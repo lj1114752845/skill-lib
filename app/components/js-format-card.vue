@@ -3,7 +3,6 @@
  邮箱：lj2690@163.com
 -->
 <script setup lang="ts">
-import 'vue-prism-editor/dist/prismeditor.min.css';
 import {highlight, languages} from 'prismjs';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/themes/prism.css';

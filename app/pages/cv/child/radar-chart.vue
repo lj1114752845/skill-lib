@@ -14,9 +14,6 @@ const chartSkillRef = ref();
 
 let chart: EChartsType | null = null;
 
-console.warn = () => {
-};
-
 watch(chartSkillRef, () => {
   chart = echarts.init(chartSkillRef.value);
   chart.setOption(prop.option);
