@@ -30,6 +30,7 @@ withDefaults(defineProps<{
 <style scoped>
 
 .project-des p {
+  white-space: pre-wrap;
   line-height: calc(14px + 12px);
 }
 
