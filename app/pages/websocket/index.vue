@@ -4,7 +4,7 @@
 -->
 <script setup lang="ts">
 import {WsData, WsViewModel} from "~/viewmodels/ws-viewmodel";
-import {nextTick, reactive} from "vue";
+import {reactive} from "vue";
 import type {WsMessage} from "~/models/ws-result";
 import {ImSocket} from "~/im/imsocket";
 
@@ -19,14 +19,12 @@ const data: WsData = reactive(new WsData(false, new Map<string, WsMessage[]>(), 
 
 const connDialogRef = ref(false);
 const connIDErrRef = ref('');
-const scrollRef = ref();
 const vm = new WsViewModel(data);
 
 function sendMsg() {
   vm.sendMsg((e) => {
     ElMessage.error(e);
   });
-  scrollToBottom();
 }
 
 function wsEvent() {
@@ -51,20 +49,6 @@ function wsConn() {
     });
   }
 }
-
-function scrollToBottom() {
-  nextTick()
-      .then(() => {
-        const scrollbar = scrollRef.value;
-        if (scrollbar) {
-          scrollbar.scrollTo(Number.MAX_SAFE_INTEGER);
-        }
-      });
-}
-
-onUnmounted(() => {
-  vm.destroy();
-});
 </script>
 
 <template>
@@ -90,28 +74,26 @@ onUnmounted(() => {
             </div>
           </template>
           <div class="msg-scroll-box">
-            <el-scrollbar ref="scrollRef">
-              <div class="msg-list">
-                <template v-if="data.selOnLine !== ''" v-for="item of data.onLineList.get(data.selOnLine)!">
-                  <div v-if="item.senderID === data.selOnLine" class="msg-receive">
-                    <div class="msg-avatar"><span>{{ Utils.getStartChar(item.senderID) }}</span></div>
-                    <div class="msg-body">
-                      <div class="msg">
-                        <p>{{ item.message }}</p>
-                      </div>
+            <div class="msg-list">
+              <template v-if="data.selOnLine !== ''" v-for="item of data.onLineList.get(data.selOnLine)!">
+                <div v-if="item.senderID === data.selOnLine" class="msg-receive">
+                  <div class="msg-avatar"><span>{{ Utils.getStartChar(item.senderID) }}</span></div>
+                  <div class="msg-body">
+                    <div class="msg">
+                      <p>{{ item.message }}</p>
                     </div>
                   </div>
-                  <div v-else class="msg-send">
-                    <div class="msg-body">
-                      <div class="msg">
-                        <p>{{ item.message }}</p>
-                      </div>
+                </div>
+                <div v-else class="msg-send">
+                  <div class="msg-body">
+                    <div class="msg">
+                      <p>{{ item.message }}</p>
                     </div>
-                    <div class="msg-avatar"><span>{{ Utils.getStartChar(item.senderID) }}</span></div>
                   </div>
-                </template>
-              </div>
-            </el-scrollbar>
+                  <div class="msg-avatar"><span>{{ Utils.getStartChar(item.senderID) }}</span></div>
+                </div>
+              </template>
+            </div>
           </div>
         </el-card>
       </el-splitter-panel>
@@ -127,7 +109,7 @@ onUnmounted(() => {
     </el-splitter>
     <el-dialog v-model="connDialogRef" title="连接聊天服务器" width="300">
       <el-form-item :error="connIDErrRef" style="color: var(--el-color-error)">
-        <el-input v-model="data.id"></el-input>
+        <el-input v-model="data.id" placeholder="用户名（随便输）"></el-input>
       </el-form-item>
       <template #footer>
         <div class="dialog-footer">
@@ -208,11 +190,19 @@ onUnmounted(() => {
   gap: 25px;
 }
 
+/* 针对 WebKit 浏览器 (Chrome, Safari, Edge) */
+.msg-scroll-box::-webkit-scrollbar {
+  display: none; /* 隐藏滚动条 */
+}
+
+
 .msg-scroll-box {
   height: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  flex-direction: column-reverse;
+  overflow: auto;
+  -ms-overflow-style: none; /* IE 和 Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .card-header {
