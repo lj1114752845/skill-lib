@@ -84,9 +84,6 @@ onUnmounted(() => {
         <el-form-item label="笔色">
           <el-color-picker v-model="opts.lineColor"></el-color-picker>
         </el-form-item>
-        <el-form-item>
-          <el-button type="primary">导出画板</el-button>
-        </el-form-item>
       </el-form>
     </div>
     <div class="canvas-box" ref="canvasBoxRef">
