@@ -65,7 +65,7 @@ onUnmounted(() => {
 <template>
   <div class="web-worker-container">
     <h1>WebWorker获取偶数演示</h1>
-    <h3>这个演示使用WebWorker在后台计算1至Number.MAX_SAFE_INTEGER之间的所有偶数。
+    <h3>这个演示使用WebWorker在后台计算1至1000000025之间的所有偶数。
       计算过程中可以拖动下方滑块，证明UI不会被阻塞。</h3>
     <el-button :type="isStartRef ? 'danger':'primary'" @click="exec">{{ isStartRef ? '停止计算' : '开始计算' }}
     </el-button>

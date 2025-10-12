@@ -34,6 +34,9 @@ function menuEvent(event: PointerEvent) {
     <nuxt-link to="/webworke" :class="{ 'active-link': route.path === '/webworke' }">
       WebWorker测试
     </nuxt-link>
+    <nuxt-link to="/canvas" :class="{ 'active-link': route.path === '/canvas' }">
+      canvas画板
+    </nuxt-link>
   </div>
 </template>
 

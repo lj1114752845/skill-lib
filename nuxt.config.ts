@@ -4,8 +4,7 @@ export default defineNuxtConfig({
     devtools: {enabled: true},
     modules: [
         '@pinia/nuxt',
-        '@element-plus/nuxt',
-        '@nuxt/image'
+        '@element-plus/nuxt'
     ],
     css: [
         "~/assets/index.css",
@@ -21,6 +20,5 @@ export default defineNuxtConfig({
                 {rel: 'icon', type: 'image/jpeg', href: '/img/app_icon.jpeg'},
             ]
         },
-    },
-
+    }
 })
